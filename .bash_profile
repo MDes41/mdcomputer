@@ -1,4 +1,4 @@
-export PATH="/usr/local/bin:$PATH:$HOME/npm-global/bin"
+export PATH="/usr/local/bin:$PATH:$HOME/npm-global/bin:$HOME/geckodriver:/usr/local/Cellar/qt5/5.8.0_1/bin"
 
 export NODE_PATH="/Users/mdesmarteau/npm-global/bin"
 
@@ -13,7 +13,7 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
 
-alias bash='sublime ~/.bash_profile'
+alias bash='subl ~/.bash_profile'
 
 # List all files colorized in long format, including dot files
 alias la="ls -Alhtr ${colorflag}"
@@ -69,6 +69,7 @@ alias s2='sublime '
 alias s3a='subl .'
 alias s3='subl '
 
+alias reload='source ~/.bash_profile'
 
 #different git log formats
 alias gl="git log --format=format:\"%C(auto)%h %C(green)%cD %C(blue)%aN%Creset %s\""
@@ -81,6 +82,50 @@ alias showdotfiles='defaults write com.apple.finder AppleShowAllFiles YES; killa
 alias hidedotfiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 
+alias conn='lsof -i'
+alias eeconn='lsof -i | grep -E "(ESTABLISHED)"'
+alias lconn='lsof -i | grep -E "(LISTEN)"'
+alias cconn='lsof -i | grep -E "(CLOSED)"'
+alias www='grep www /etc/services'
+
+alias bz='cd ~/Turing/side_projects/BelowZeroCryotherapy'
+
+alias pl='port installed'
+
+#check the network mac adress
+alias mac='ifconfig en0 | grep ether'
+
+# command to see if bluetooth is down
+alias bts='ifconfig awdl0 | awk "/status/{print $2}"'
+alias wfs='ifconfig en0 | awk "/status/{print $2}"'
+alias wfd='sudo ifconfig en0 down'
+alias wfu='sudo ifconfig en0 up'
+alias btd='sudo ifconfig awdl0 down'
+alias btu='sudo ifconfig awdl0 up'
+
+alias bz='cd ~/Turing/side_projects/BelowZeroCryotherapy'
+
+
+#view terminal history
+alias hist='history'
+#delete terminal history
+alias dhist='history -c'
+
+
+#List download history
+dh() { sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select * from LSQuarantineEvent' | php -r 'date_default_timezone_set("America/Montreal"); foreach (explode("\n", file_get_contents("php://stdin")) as $l) { preg_match("/([0-9\\.]+)\\|(.*)\$/", $l, $re); echo date("Y-m-d H:i:s",strtotime("2000-01-01 19:00")+$re[1])."\t$re[2]\n"; }'; }
+#Delete download history
+deletedh() { sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; }
+
+
+# command to change mac address
+macnew() { sudo ifconfig en0 ether '$@'; }
+# command to make it up down us 'up' or 'down'
+bt() { sudo ifconfig awdl0 '$@'; } #not working
+
+pi() { port info '$@'; }
+
+p() { lsof -i :"$@";}
 
 parse_git_branch() {
    
@@ -94,4 +139,13 @@ source /usr/local/etc/bash_completion.d/git-completion.bash
 #     myip=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
 #     echo -e "$(ips | sed -e :a -e '$!N;s/\n/${IP_SEPARATOR}/;ta' | sed -e 's/127\.0\.0\.1\${IP_SEPARATOR}//g'), ${myip}"
 # }
+
+
+##
+# Your previous /Users/mdcomputer/.bash_profile file was backed up as /Users/mdcomputer/.bash_profile.macports-saved_2017-04-29_at_23:29:37
+##
+
+# MacPorts Installer addition on 2017-04-29_at_23:29:37: adding an appropriate PATH variable for use with MacPorts.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# Finished adapting your PATH environment variable for use with MacPorts.
 
